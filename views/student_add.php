@@ -88,7 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
 
         <label for="birthday">Birthdate:</label>
-        <input type="date" name="birthday" id="birthday" required>
+        <input type="date" name="birthday" id="birthday" 
+        value="<?php echo date('M j Y', strtotime($student_id['birthday']));?>">
 
         <label for="contact_number">Contact Number:</label>
         <input type="text" id="contact_number" name="contact_number" required>

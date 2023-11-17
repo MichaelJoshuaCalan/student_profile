@@ -1,6 +1,10 @@
 <?php
-include_once("../db.php");
-include_once("../student.php");
+include_once("../db.php"); // Include the Database class file
+include_once("../student.php"); // Include the Student class file
+include_once("../student_details.php"); // Include the Student class file
+include_once("../town_city.php");
+include_once("../province.php");
+
 
 $db = new Database();
 $connection = $db->getConnection();
@@ -31,6 +35,9 @@ $student = new Student($db);
                 <th>Last Name</th>
                 <th>Gender</th>
                 <th>Birthdate</th>
+                <th>Street</th>
+                <th>Town</th>
+                <th>Province</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -48,8 +55,12 @@ $student = new Student($db);
                 <td><?php echo $result['first_name']; ?></td>
                 <td><?php echo $result['middle_name']; ?></td>
                 <td><?php echo $result['last_name']; ?></td>
-                <td><?php echo $result['gender']; ?></td>
-                <td><?php echo $result['birthday']; ?></td>
+                <td><?php echo ($result['gender']==1)?'M':'F'; ?></td>
+                <td><?php echo date('F j, Y', strtotime($result['birthday'])); ?></td>
+                <td><?php echo $result['street']; ?></td>
+                <td><?php echo $result['town_city']; ?></td>
+                <td><?php echo $result['province']; ?></td>
+                
                 <td>
                     <a href="student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
                     |

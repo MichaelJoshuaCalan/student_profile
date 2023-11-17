@@ -68,7 +68,7 @@ class Student {
                     gender = :gender,
                     birthday = :birthday
                     WHERE id = :id";
-
+    
             $stmt = $this->db->getConnection()->prepare($sql);
             // Bind parameters
             $stmt->bindValue(':id', $data['id']);
@@ -78,16 +78,40 @@ class Student {
             $stmt->bindValue(':last_name', $data['last_name']);
             $stmt->bindValue(':gender', $data['gender']);
             $stmt->bindValue(':birthday', $data['birthday']);
-
+    
             // Execute the query
             $stmt->execute();
-
-            return $stmt->rowCount() > 0;
+    
+            // Update the student_details table
+            $sqlDetails = "UPDATE student_details
+                           SET
+                               street = :street,
+                               town_city = :town_city,
+                               province = :province
+                           WHERE student_id = :id";
+    
+            $stmtDetails = $this->db->getConnection()->prepare($sqlDetails);
+    
+            // Bind parameters for the student_details table
+            $stmtDetails->bindValue(':id', $data['id']);
+            $stmtDetails->bindValue(':street', $data['street']);
+            $stmtDetails->bindValue(':town_city', $data['town_city']);
+    
+            // Validate and bind province value
+            $provinceValue = is_numeric($data['province']) ? $data['province'] : null;
+            $stmtDetails->bindValue(':province', $provinceValue, PDO::PARAM_INT);
+    
+            // Execute the query for the student_details table
+            $stmtDetails->execute();
+    
+            // Check if at least one row was affected in both tables
+            return $stmt->rowCount() > 0 && $stmtDetails->rowCount() > 0;
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
+    
 
     public function delete($id) {
         try {
@@ -110,7 +134,10 @@ class Student {
 
     public function displayAll(){
         try {
-            $sql = "SELECT * FROM students LIMIT 10"; // Modify the table name to match your database
+            $sql = "SELECT students.*, student_details.street, student_details.town_city, student_details.province
+                    FROM students
+                    LEFT JOIN student_details ON students.id = student_details.student_id
+                    LIMIT 10";
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -121,6 +148,7 @@ class Student {
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
+    
  
     /*
         sample simple tests

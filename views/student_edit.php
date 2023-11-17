@@ -27,6 +27,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'middle_name' => $_POST['middle_name'],
         'last_name' => $_POST['last_name'],
         'gender' => $_POST['gender'],
+        'street' => $_POST['street'],
+        'town_city' => $_POST['town_city'],
+        'province' => $_POST['province'],
         'birthday' => $_POST['birthday'],
     ];
 
@@ -72,11 +75,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" name="last_name" id="last_name" value="<?php echo $studentData['last_name']; ?>">
         
         <label for="gender">Gender:</label>
-        <input type="text" name="gender" id="gender" value="<?php echo $studentData['gender']; ?>">
-        
+        <select name="gender" id="gender">
+            <option value="1" <?php echo ($studentData['gender'] == 1) ? 'selected' : ''; ?>>M</option>
+            <option value="0" <?php echo ($studentData['gender'] == 0) ? 'selected' : ''; ?>>F</option>
+        </select>
         <label for="birthday">Birthdate:</label>
-        <input type="text" name="birthday" id="birthday" value="<?php echo $studentData['birthday']; ?>">
+        <input type="date" name="birthday" id="birthday" value="<?php echo $studentData['birthday']; ?>">
         
+        <label for="street">Street:</label>
+        <input type="text" name="street" id="street" value="<?= $studentData['street'] ?? '' ?>">
+        
+        <label for="town_city">Town:</label>
+        <input type="text" name="town_city" id="town_city" value="<?= $studentData['town_city'] ?? '' ?>">
+        
+        <label for="province">Province:</label>
+        <input type="text" name="province" id="province" value="<?= $studentData['province'] ?? '' ?>">
+
+
         <input type="submit" value="Update">
     </form>
     </div>
