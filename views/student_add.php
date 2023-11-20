@@ -94,6 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="contact_number">Contact Number:</label>
         <input type="text" id="contact_number" name="contact_number" required>
 
+        <label for="id">Students ID:</label>
+        <input type="number" id="id" name="id" required>
+
         <label for="street">Street:</label>
         <input type="text" id="street" name="street" required>
 

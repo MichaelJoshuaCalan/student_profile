@@ -134,9 +134,11 @@ class Student {
 
     public function displayAll(){
         try {
-            $sql = "SELECT students.*, student_details.street, student_details.town_city, student_details.province
+            $sql = "SELECT students.*, student_details.street, town_city.name as town_name, province.name as province_name
                     FROM students
                     LEFT JOIN student_details ON students.id = student_details.student_id
+                    LEFT JOIN town_city ON student_details.town_city = town_city.id
+                    LEFT JOIN province ON student_details.province = province.id
                     LIMIT 10";
             $stmt = $this->db->getConnection()->prepare($sql);
             $stmt->execute();
@@ -148,6 +150,8 @@ class Student {
             throw $e; // Re-throw the exception for higher-level handling
         }
     }
+    
+    
     
  
     /*

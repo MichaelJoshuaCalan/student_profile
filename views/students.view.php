@@ -58,8 +58,8 @@ $student = new Student($db);
                 <td><?php echo ($result['gender']==1)?'M':'F'; ?></td>
                 <td><?php echo date('F j, Y', strtotime($result['birthday'])); ?></td>
                 <td><?php echo $result['street']; ?></td>
-                <td><?php echo $result['town_city']; ?></td>
-                <td><?php echo $result['province']; ?></td>
+                <td><?php echo $result['town_name']; ?></td>
+                <td><?php echo $result['province_name']; ?></td>
                 
                 <td>
                     <a href="student_edit.php?id=<?php echo $result['id']; ?>">Edit</a>
